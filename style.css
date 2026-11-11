@@ -1,0 +1,595 @@
+/* ==========================================================
+   Tema: pramugari / kabin pesawat
+   Palet: Navy kabin, Biru langit, Awan, Pink kebaya, Emas pin sayap
+   Font : Fraunces (judul), Figtree (isi)
+   ========================================================== */
+
+:root {
+  --navy: #0f2747;
+  --navy-soft: #1b3d6d;
+  --sky: #dcebfa;
+  --sky-deep: #b9d5f1;
+  --cloud: #f6f9fd;
+  --pink: #d6447f;
+  --pink-soft: #fbe3ee;
+  --gold: #c9a24b;
+  --ink: #1c2b40;
+  --muted: #566883;
+
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--cloud);
+}
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; border-radius: 4px; }
+
+.icon { width: 1.25rem; height: 1.25rem; fill: currentColor; flex: none; }
+
+.field-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--navy);
+  color: #fff;
+}
+.topbar-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+.brand .icon { color: var(--gold); transform: rotate(45deg); }
+
+.nav { display: flex; gap: 0.25rem; }
+.nav a {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #d4e2f4;
+  transition: background 0.2s, color 0.2s;
+}
+.nav a:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.nav a.is-active { background: #fff; color: var(--navy); }
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.nav-toggle span { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Hero: boarding pass ---------- */
+.hero {
+  position: relative;
+  background: var(--navy);
+  padding: 3rem 1.25rem 7rem;
+}
+/* tepi awan di bawah hero */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 64px;
+  background:
+    radial-gradient(circle at 30px 100%, var(--cloud) 0 38px, transparent 39px) 0 0 / 120px 100% repeat-x,
+    radial-gradient(circle at 85px 100%, var(--cloud) 0 50px, transparent 51px) 0 0 / 150px 100% repeat-x;
+}
+
+.pass {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+}
+
+.pass-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 24px 0 0 0;
+}
+.pass-strip .icon { transform: rotate(45deg); }
+
+.pass-body { padding: 1.75rem 2rem 2.25rem; }
+.pass-body h1 {
+  margin-top: 0.15rem;
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  color: var(--navy);
+}
+.role {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--pink);
+}
+
+/* rute Mojokerto -> Ground Staff */
+.route {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+.route-end strong { font-family: var(--serif); font-size: 1.2rem; color: var(--navy); }
+.route-end-right { text-align: right; }
+.route-line {
+  position: relative;
+  flex: 1;
+  height: 24px;
+}
+.route-line::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  border-top: 2px dashed var(--sky-deep);
+}
+.route-plane {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--pink);
+  transform: translate(-50%, -50%) rotate(90deg);
+  animation: takeoff 2.6s cubic-bezier(0.55, 0, 0.25, 1) 0.4s both;
+}
+@keyframes takeoff {
+  from { left: 0; }
+  to   { left: 100%; }
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--sky);
+}
+.facts dt { font-size: 0.8125rem; font-weight: 600; color: var(--muted); }
+.facts dd { margin: 0.1rem 0 0; font-weight: 600; color: var(--navy); }
+
+/* sobekan tiket */
+.pass-stub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  padding: 2rem 1.5rem;
+  border-left: 2px dashed var(--sky-deep);
+}
+.pass-stub::before,
+.pass-stub::after {
+  content: "";
+  position: absolute;
+  left: -15px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--navy);
+}
+.pass-stub::before { top: -14px; }
+.pass-stub::after  { bottom: -14px; }
+
+.photo-wrap {
+  position: relative;
+  width: 230px;
+  height: 240px;
+  flex: none;
+}
+.silhouette {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 170px;
+  height: 204px;
+  opacity: 0;
+  transform: translate(-36px, 10px) scale(0.85);
+  transform-origin: 20% 60%;
+  transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  pointer-events: none;
+}
+.photo-wrap.is-open .silhouette {
+  opacity: 1;
+  transform: none;
+}
+.sil-body { fill: var(--sky-deep); }
+.sil-hat { fill: var(--gold); }
+.sil-scarf { fill: var(--pink); }
+
+.photo-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+.photo-btn:hover { transform: scale(1.03); }
+.photo-btn:active { transform: scale(0.97); }
+
+.photo-hint {
+  position: absolute;
+  left: 0;
+  top: 166px;
+  width: 118px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.photo {
+  position: relative;
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 6px solid var(--sky);
+  box-shadow: 0 0 0 3px var(--pink), 8px 10px 24px rgba(15, 39, 71, 0.28);
+  overflow: hidden;
+  background: var(--navy);
+}
+.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 3rem;
+  color: var(--gold);
+}
+
+.barcode {
+  width: 100%;
+  height: 54px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--navy) 0 2px, transparent 2px 4px,
+    var(--navy) 4px 5px, transparent 5px 8px,
+    var(--navy) 8px 11px, transparent 11px 13px,
+    var(--navy) 13px 14px, transparent 14px 18px
+  );
+}
+
+/* ---------- Section umum ---------- */
+.section { padding: 5rem 1.25rem; }
+.section-sky { background: var(--sky); }
+.wrap { max-width: 1040px; margin: 0 auto; }
+
+.section h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
+  color: var(--navy);
+  margin-bottom: 1.75rem;
+}
+.section h2::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin-top: 0.6rem;
+  border-radius: 2px;
+  background: var(--pink);
+}
+
+.lead {
+  max-width: 62ch;
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  line-height: 1.7;
+  color: var(--navy);
+}
+
+/* ---------- Pendidikan: timeline ---------- */
+.timeline {
+  --p: 0;
+  position: relative;
+  max-width: 760px;
+  padding-left: 3.5rem;
+}
+.timeline-track {
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--sky-deep) 0 8px, transparent 8px 14px);
+}
+.timeline-fill {
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px;
+  height: calc(var(--p) * 100%);
+  background: var(--pink);
+}
+.plane-marker {
+  position: absolute;
+  left: 16px;
+  top: calc(var(--p) * 100%);
+  width: 2rem;
+  height: 2rem;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background: var(--pink);
+  color: #fff;
+  transform: translate(-50%, -50%) rotate(180deg);
+  z-index: 2;
+}
+
+.step { position: relative; padding-bottom: 2.5rem; }
+.step:last-child { padding-bottom: 0; }
+.step::before {
+  content: "";
+  position: absolute;
+  left: -3.5rem;
+  top: 0.35rem;
+  width: 14px;
+  height: 14px;
+  margin-left: 9px;
+  border-radius: 50%;
+  background: var(--sky);
+  border: 3px solid var(--sky-deep);
+  transition: background 0.3s, border-color 0.3s;
+}
+.step.is-passed::before { background: var(--pink); border-color: var(--pink); }
+
+.step h3 { font-size: 1.3rem; color: var(--navy); }
+.period { margin: 0.2rem 0 0.6rem; font-weight: 600; color: var(--pink); }
+.step p:not(.period) { max-width: 66ch; }
+.step ul { list-style: disc; padding-left: 1.25rem; max-width: 66ch; }
+.step li + li { margin-top: 0.3rem; }
+.step li::marker { color: var(--pink); }
+
+/* ---------- Keahlian ---------- */
+.skills {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3.5rem;
+}
+.skills-side { display: grid; gap: 2.5rem; align-content: start; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.chips li {
+  padding: 0.45rem 1rem;
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--navy);
+  background: #fff;
+}
+.chips-pink li {
+  border-color: var(--pink);
+  background: var(--pink-soft);
+  color: #8f1f52;
+}
+
+.lang { max-width: 320px; }
+.lang li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--sky-deep);
+  font-weight: 600;
+  color: var(--navy);
+}
+.lang em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ---------- Organisasi ---------- */
+.orgs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+.org {
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--navy);
+}
+.org:nth-child(2) { border-left-color: var(--pink); }
+.org h3 { font-size: 1.3rem; color: var(--navy); margin-bottom: 0.6rem; }
+
+/* ---------- Kontak ---------- */
+.contact { background: var(--navy); color: #fff; }
+.contact h2 { color: #fff; }
+.contact h2::after { background: var(--gold); }
+.contact .field-label { color: #9fb7d6; }
+
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.contact-list li {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+}
+.contact-list a {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #fff;
+  overflow-wrap: anywhere;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 4px;
+}
+.contact-list a:hover { color: var(--gold); }
+
+.copy {
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gold);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.copy:hover { background: var(--gold); color: var(--navy); }
+
+.footer {
+  padding: 1.5rem 1.25rem;
+  background: #0a1c36;
+  color: #9fb7d6;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translate(-50%, 20px);
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 100;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Responsif ---------- */
+@media (max-width: 860px) {
+  .pass { grid-template-columns: 1fr; }
+  .pass-strip { border-radius: 24px 24px 0 0; }
+  .pass-stub {
+    flex-direction: row;
+    justify-content: space-between;
+    border-left: 0;
+    border-top: 2px dashed var(--sky-deep);
+    padding: 1.5rem 2rem;
+  }
+  .pass-stub::before, .pass-stub::after { top: -14px; bottom: auto; }
+  .pass-stub::before { left: -14px; }
+  .pass-stub::after  { left: auto; right: -14px; }
+  .barcode { max-width: 220px; }
+
+  .skills { grid-template-columns: 1fr; gap: 2.5rem; }
+  .orgs { grid-template-columns: 1fr; }
+  .contact-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .nav-toggle { display: flex; }
+  .nav {
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem 1.25rem 1rem;
+    background: var(--navy);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 0.7rem 0.9rem; }
+  .topbar-inner { position: relative; }
+}
+
+@media (max-width: 520px) {
+  .pass-body { padding: 1.5rem 1.25rem 1.75rem; }
+  .pass-strip { padding: 0.85rem 1.25rem; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .facts div:first-child { grid-column: 1 / -1; }
+  .pass-stub { flex-direction: column; gap: 1.25rem; }
+  .barcode { max-width: none; }
+  .timeline { padding-left: 2.75rem; }
+  .step::before { left: -2.75rem; }
+  .section { padding: 3.5rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .route-plane { left: 100%; }
+}
